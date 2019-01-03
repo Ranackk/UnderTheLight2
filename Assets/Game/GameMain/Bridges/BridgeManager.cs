@@ -12,6 +12,11 @@ using External.JEichner.ooo;
 
 namespace Game.GameMain.Bridges
 {
+
+    /*
+     * Handles bridge points, the current bridge and the bridge mesh.
+     * 
+     */
     public class BridgeManager : Singleton<BridgeManager>, IBaseManager
     {
         RawBridgePoint  m_FirstBridgePoint;
@@ -19,7 +24,7 @@ namespace Game.GameMain.Bridges
 
         Bridge          m_Bridge;
 
-        BridgeMesh      m_BridgeMesh;
+        BridgeMesh      m_BridgeMesh; // TODO: Move to bridge visualizer
 
         public BridgeManager()
         {
@@ -184,8 +189,8 @@ namespace Game.GameMain.Bridges
 
         void UpdateBridgeMesh()
         {
-            m_BridgeMesh = BridgeCreator.CreateBridgeMesh(m_Bridge);
-            Debug.Log("BridgeMesh updated!");
+            BridgeMesh bridgeMesh = BridgeCreator.CreateBridgeMesh(m_Bridge);
+            EventManager.Instance.FireEvent<CreateBridgeEvent>(new CreateBridgeEvent(bridgeMesh));
         }
 
         ////////////////////////////////////////////////////////////////
@@ -248,45 +253,6 @@ namespace Game.GameMain.Bridges
 
             ////////////////////////////////////////////////////////////////
             
-            if (m_BridgeMesh.IsValid())
-            {
-                for (int i = 0; i < m_BridgeMesh.Positions.Count; i++)
-                {
-                    bool isLeftPoint = i % 2 == 0;
-
-                    if (isLeftPoint)
-                    {
-                        Gizmos.color = new Color (0.4f, 0.4f, 1.0f, 0.5f);
-                    }
-                    else
-                    {
-                        Gizmos.color = new Color (0.4f, 1.0f, 0.4f, 0.5f);
-                    }
-
-                    Vector3 position = m_BridgeMesh.Positions[i];
-
-                    Gizmos.DrawWireCube(position, Vector3.one * 0.1f);
-                }
-
-                ////////////////////////////////////////////////////////////////
-                
-                Mesh mesh = new Mesh();
-
-                int[] indicies           = m_BridgeMesh.Indicies.ToArray();
-                
-                Vector3[] positionsWS    = m_BridgeMesh.Positions.ToArray();
-                Vector3[] normalsWS      = m_BridgeMesh.Normals.ToArray();
-                Vector2[] uvs            = m_BridgeMesh.UVs.ToArray();
-
-                mesh.vertices   = positionsWS;
-                mesh.normals    = normalsWS;
-                mesh.uv         = uvs;
-
-                mesh.triangles  = indicies;
-
-                Gizmos.color = Color.white;
-                Gizmos.DrawWireMesh(mesh);
-            }
         }
     }
 }

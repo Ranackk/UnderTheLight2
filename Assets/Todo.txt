@@ -4,6 +4,7 @@ TODO:
 Find a solution for the vertex color check
     -> Either find out if cubic mesh colliders cost alot
     -> Find a different way (else.g. Tags)
+	-> All shootables have to have a mesh collider with a certain vertex color. All other colliders are not sufficent fo placing a bridge!
 
 Show the Bridge
 x   -> Gizmos

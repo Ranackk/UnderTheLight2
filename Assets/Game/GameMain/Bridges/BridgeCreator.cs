@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+
+
 namespace Game.GameMain.Bridges
 {
+
+    /*
+     * Used to build the bridge mesh from a bridge struct 
+     */
+
     public static class BridgeCreator 
     {
         public static BridgeMesh CreateBridgeMesh(Bridge bridge)
@@ -81,6 +88,11 @@ namespace Game.GameMain.Bridges
             
             // Depending on if we are an even or uneven point, we need to invert our "right" to make sure it is also the bridges "right"
             float facingFactor              = isEvenPoint ? 1.0f : -1.0f; 
+
+            ////////////////////////////////////////////////////////////////
+            // Inner Position
+            leftVertex.InnerPositionWS      = bridgePoint.PositionWS;
+            rightVertex.InnerPositionWS     = bridgePoint.PositionWS;
 
             ////////////////////////////////////////////////////////////////
             // Position

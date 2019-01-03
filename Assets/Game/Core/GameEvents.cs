@@ -26,4 +26,15 @@ namespace Game.Core
 
         }
     }
+
+    ////////////////////////////////////////////////////////////////
+    
+    public class CreateBridgeEvent : GameEvent
+    {
+        public BridgeMesh BridgeMeshData;
+        public CreateBridgeEvent(BridgeMesh bridgeMesh)
+        {
+            BridgeMeshData = bridgeMesh;
+        }
+    }
 }

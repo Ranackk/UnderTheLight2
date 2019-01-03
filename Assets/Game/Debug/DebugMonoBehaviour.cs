@@ -83,11 +83,4 @@ public class DebugMonoBehaviour : MonoBehaviour {
     {
         EventManager.Instance.FireEvent<ResetBridgePointsEvent>(new ResetBridgePointsEvent());
     }
-
-    ////////////////////////////////////////////////////////////////
-
-    private void OnDrawGizmos()
-    {
-        BridgeManager.Instance.DEBUG_DrawGizmos();
-    }
 }

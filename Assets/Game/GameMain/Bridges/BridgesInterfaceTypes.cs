@@ -180,28 +180,31 @@ namespace Game.GameMain.Bridges
     /// </summary>
     public struct BridgeMeshVertex : Serializer.ISerializable
     {
-        public Vector3 PositionWS;
+        public Vector3 PositionWS;      // The position of the vertex
+        public Vector3 InnerPositionWS; // The position of the corresponding bridge point (mid point).
         public Vector3 NormalWS;
         public Vector2 UV;
         
         ////////////////////////////////////////////////////////////////
         
-        public static BridgeMeshVertex INVALID = new BridgeMeshVertex(Vector3.zero, Vector3.zero, Vector2.zero);
+        public static BridgeMeshVertex INVALID = new BridgeMeshVertex(Vector3.zero, Vector3.zero, Vector3.zero, Vector2.zero);
 
-        public BridgeMeshVertex(Vector3 positionWS, Vector3 normalWS, Vector2 uv)
+        public BridgeMeshVertex(Vector3 positionWS, Vector3 innerPositionWS, Vector3 normalWS, Vector2 uv)
         {
-            PositionWS  = positionWS;
-            NormalWS    = normalWS;
-            UV          = uv;
+            PositionWS      = positionWS;
+            InnerPositionWS = innerPositionWS;
+            NormalWS        = normalWS;
+            UV              = uv;
         }
 
         ////////////////////////////////////////////////////////////////
 
         public void Serialize(Serializer io)
         {
-            io.Serialize("PositionWS",  ref PositionWS,  Vector3.zero);
-            io.Serialize("NormalWS",    ref NormalWS,    Vector3.zero);
-            io.Serialize("UV",          ref UV,          Vector2.zero);
+            io.Serialize("PositionWS",      ref PositionWS,         Vector3.zero);
+            io.Serialize("InnerPositionWS", ref InnerPositionWS,    Vector3.zero);
+            io.Serialize("NormalWS",        ref NormalWS,           Vector3.zero);
+            io.Serialize("UV",              ref UV,                 Vector2.zero);
         }
     }
     
@@ -212,6 +215,7 @@ namespace Game.GameMain.Bridges
     public struct BridgeMesh : Serializer.ISerializable
     {
         public List<Vector3>   Positions;
+        public List<Vector3>   InnerPositions;
         public List<Vector3>   Normals;
         public List<Vector2>   UVs;
         public List<int>       Indicies;
@@ -222,17 +226,19 @@ namespace Game.GameMain.Bridges
 
         public BridgeMesh(List<BridgeMeshVertex> vertices, List<int> indicies)
         {
-            Indicies    = indicies;
+            Indicies        = indicies;
             
-            Positions   = new List<Vector3>(); 
-            Normals     = new List<Vector3>(); 
-            UVs         = new List<Vector2>(); 
+            Positions       = new List<Vector3>(); 
+            InnerPositions  = new List<Vector3>();
+            Normals         = new List<Vector3>(); 
+            UVs             = new List<Vector2>(); 
 
             for (int i = 0; i < vertices.Count; i++)
             {
                 BridgeMeshVertex vertex = vertices[i];
                 
                 Positions.Add(vertex.PositionWS);
+                InnerPositions.Add(vertex.InnerPositionWS);
                 Normals.Add(vertex.NormalWS);
                 UVs.Add(vertex.UV);
             }
@@ -259,7 +265,7 @@ namespace Game.GameMain.Bridges
             {
                 for (int i = 0; i < Positions.Count; i++)
                 {
-                    vertices.Add(new BridgeMeshVertex(Positions[i], Normals[i], UVs[i]));
+                    vertices.Add(new BridgeMeshVertex(Positions[i], InnerPositions[i], Normals[i], UVs[i]));
                 }
             }
 
@@ -267,15 +273,17 @@ namespace Game.GameMain.Bridges
 
             if (io.GetState() == Serializer.State.Loading)
             {
-                Positions   = new List<Vector3>(); 
-                Normals     = new List<Vector3>(); 
-                UVs         = new List<Vector2>(); 
+                Positions       = new List<Vector3>(); 
+                InnerPositions  = new List<Vector3>(); 
+                Normals         = new List<Vector3>(); 
+                UVs             = new List<Vector2>(); 
 
                 for (int i = 0; i < vertices.Count; i++)
                 {
                     BridgeMeshVertex vertex = vertices[i];
                 
                     Positions.Add(vertex.PositionWS);
+                    InnerPositions.Add(vertex.InnerPositionWS);
                     Normals.Add(vertex.NormalWS);
                     UVs.Add(vertex.UV);
                 }
