@@ -1,0 +1,35 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game.Core
+{
+
+////////////////////////////////////////////////////////////////
+
+    public class EntryPoint : MonoBehaviour
+    {
+
+     ////////////////////////////////////////////////////////////////
+
+        void Start()
+        {
+            GameManager.OnStart();
+            // TODO: ??? Make the GameManager also manage scenes?
+        }
+        
+        ////////////////////////////////////////////////////////////////
+        
+        void OnDestroy()
+        {
+            GameManager.OnDestroy();
+        }
+
+        ////////////////////////////////////////////////////////////////
+
+    }
+
+ ////////////////////////////////////////////////////////////////
+
+}
+

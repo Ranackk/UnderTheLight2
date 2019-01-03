@@ -1,0 +1,28 @@
+﻿
+TODO:
+
+Find a solution for the vertex color check
+    -> Either find out if cubic mesh colliders cost alot
+    -> Find a different way (else.g. Tags)
+
+Show the Bridge
+x   -> Gizmos
+    -> Generate a bridge mesh
+
+Create a player!
+    -> Communictaes with BridgeManager
+        -> Tells him whenever he succesfully places a bridge point, only checks if the bridge point can be placed. If it will destroy a bridge has to be checked elsewhere? 
+            > Maybe, if that gets checked elsewhere, I can move the logic out of the "PlaceBridgePoint" method.
+
+Check if Serialization works for monobehaviours as well!
+
+
+===
+
+BridgeCreatorComponent
+-> Communicates with the BridgeManager
+
+Tick:
+> MayPlacePoint
+if (mayPlace): > Would point make bridge?
+-> Store result? (might not be needed) 
