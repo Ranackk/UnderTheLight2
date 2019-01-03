@@ -110,8 +110,16 @@ namespace Game.GameMain.Bridges
             ////////////////////////////////////////////////////////////////
             // UV
             
-            leftVertex.UV                   = new Vector2(0.0f, bridgePoint.UV.y);
-            rightVertex.UV                  = new Vector2(1.0f, bridgePoint.UV.y);
+            leftVertex.UV                   = new Vector2(0.0f, bridgePoint.UV.x);
+            rightVertex.UV                  = new Vector2(1.0f, bridgePoint.UV.x);
+
+            // TODO: Currently, this assumes that both left and right vertex of point a and point b are having the same tangent.  
+            //
+            //  1a          2a
+            //  1             1
+            //  1b              2b
+            //
+            // 2a & 2b will have the same u-coord, resulting in a screwed view.
 
             ////////////////////////////////////////////////////////////////
             

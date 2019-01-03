@@ -294,9 +294,10 @@ namespace Game.GameMain.Bridges
                 Vector3 pointB  = inOutBridgePoints.BridgePoints[i + 1].PositionWS;
 
                 bridgeLength    += Vector3.Distance(pointA, pointB);
-
-                ValidBridgePoint bridgePoint    = inOutBridgePoints.BridgePoints[i + 1];
-                bridgePoint.UV                  = new Vector2(bridgeLength, 0.0f);
+                    
+                ValidBridgePoint bridgePoint            = inOutBridgePoints.BridgePoints[i + 1];
+                bridgePoint.UV                          = new Vector2(bridgeLength, 0.0f);
+                inOutBridgePoints.BridgePoints[i + 1]   = bridgePoint;
             }
         }
     }
