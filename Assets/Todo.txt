@@ -9,6 +9,7 @@ Find a solution for the vertex color check
 Show the Bridge
 x   -> Gizmos
     -> Generate a bridge mesh
+		> Fix UVs
 
 Create a player!
     -> Communictaes with BridgeManager

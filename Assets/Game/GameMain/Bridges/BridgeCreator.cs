@@ -109,17 +109,23 @@ namespace Game.GameMain.Bridges
 
             ////////////////////////////////////////////////////////////////
             // UV
+            // As the left and the right vertex might be differently far away from the previous points,
+            // we need to calculate the UVs per vertex and cannot use the UVs of the points.
             
-            leftVertex.UV                   = new Vector2(0.0f, bridgePoint.UV.x);
-            rightVertex.UV                  = new Vector2(1.0f, bridgePoint.UV.x);
+            float leftVertexV               = bridgePoint.UV.x;
+            float rightVertexV              = bridgePoint.UV.x;
 
-            // TODO: Currently, this assumes that both left and right vertex of point a and point b are having the same tangent.  
-            //
-            //  1a          2a
-            //  1             1
-            //  1b              2b
-            //
-            // 2a & 2b will have the same u-coord, resulting in a screwed view.
+            if (inOutBridgeMeshVertices.Count >= 2)
+            {
+                BridgeMeshVertex prevVertexLeft     = inOutBridgeMeshVertices[inOutBridgeMeshVertices.Count - 2];
+                BridgeMeshVertex prevVertexRight    = inOutBridgeMeshVertices[inOutBridgeMeshVertices.Count - 1];
+                
+                leftVertexV                         = prevVertexLeft.UV.y   + Vector3.Distance(prevVertexLeft.PositionWS, leftVertex.PositionWS);
+                rightVertexV                        = prevVertexRight.UV.y  + Vector3.Distance(prevVertexRight.PositionWS, rightVertex.PositionWS);
+            }
+
+            leftVertex.UV                   = new Vector2(0.0f, leftVertexV);
+            rightVertex.UV                  = new Vector2(1.0f, rightVertexV);
 
             ////////////////////////////////////////////////////////////////
             
