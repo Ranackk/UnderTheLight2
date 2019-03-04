@@ -5,6 +5,7 @@ using UnityEngine;
 
 using External.JEichner.ooo;
 using Game.GameMain.Bridges;
+using Game.GameMain.Players;
 
 namespace Game.Core
 {
@@ -186,6 +187,7 @@ namespace Game.Core
             ////////////////////////////////////////////////////////////////
 
             BridgeManager.Instance.Serialize(serializer);
+            PlayerManager.Instance.Serialize(serializer);
 
             ////////////////////////////////////////////////////////////////
 
@@ -214,6 +216,7 @@ namespace Game.Core
 
             ////////////////////////////////////////////////////////////////
 
+            PlayerManager.Instance.Serialize(serializer);
             BridgeManager.Instance.Serialize(serializer);
 
             ////////////////////////////////////////////////////////////////
