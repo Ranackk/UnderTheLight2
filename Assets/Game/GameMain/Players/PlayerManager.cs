@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using JSDK.Misc;
 using External.JEichner.ooo;
 using UnityEngine.Assertions;
+using UnityEngine;
 
 namespace Game.GameMain.Players
 {
@@ -18,14 +19,19 @@ namespace Game.GameMain.Players
         
         public ref Player CreatePlayer(PlayerID playerID)
         {
+            Debug.Log("PlayerManager: Create Player " + (int) playerID);
+
+            m_Players[(int) playerID] = new Player();
             m_Players[(int) playerID].Init(playerID);
             return ref m_Players[(int) playerID];
         }
         
         ////////////////////////////////////////////////////////////////
 
-        public void RemovePlayer(PlayerID playerID)
+        public void DestroyPlayer(PlayerID playerID)
         {
+            Debug.Log("PlayerManager: Destroy Player " + (int) playerID);
+
             m_Players[(int) playerID].Destroy();
         }
 
@@ -43,27 +49,29 @@ namespace Game.GameMain.Players
 
         public void Serialize(Serializer io)
         {
-            io.Serialize("Players", ref m_Players);
+            List<Player> playerList = m_Players.ToList();
+            io.Serialize("Players", ref playerList, false);
+            m_Players               = playerList.ToArray();
         }
 
+        ////////////////////////////////////////////////////////////////
+        // Initialization & Destruction
         ////////////////////////////////////////////////////////////////
 
         public void OnInitialize()
         {
+            Debug.Log("Initializing Player Manager ...");
+
+            ////////////////////////////////////////////////////////////////
+            
+            m_Players = new Player[(int) PlayerID.Count];
         }
 
         ////////////////////////////////////////////////////////////////
 
         public void OnDestroy()
         {
-            throw new NotImplementedException();
-        }
-       
-        ////////////////////////////////////////////////////////////////
-
-        public string ToString()
-        {
-            throw new NotImplementedException();
+            Debug.Log("Destructing Player Manager ...");
         }
     }
 }

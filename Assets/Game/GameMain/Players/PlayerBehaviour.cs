@@ -15,6 +15,13 @@ namespace Game.GameMain.Players
         {
             PlayerManager.Instance.CreatePlayer(m_PlayerID);
         }
-        
+
+        ////////////////////////////////////////////////////////////////
+
+        private void OnDestroy()
+        {
+            PlayerManager.Instance.DestroyPlayer(m_PlayerID);
+        }
+
     }
 }

@@ -16,6 +16,7 @@ Create a player!
         -> Tells him whenever he succesfully places a bridge point, only checks if the bridge point can be placed. If it will destroy a bridge has to be checked elsewhere? 
             > Maybe, if that gets checked elsewhere, I can move the logic out of the "PlaceBridgePoint" method.
 Create a system that hypothetically supports multiple payers at once.
+	> Make there be either a bridge manager per player or a make it have player specific data
 
 Check if Serialization works for monobehaviours as well!
 

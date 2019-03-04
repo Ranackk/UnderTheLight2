@@ -21,7 +21,7 @@ namespace Game.GameMain.Players
 
     ////////////////////////////////////////////////////////////////
 
-    public class Player
+    public class Player : Serializer.ISerializable
     {
         PlayerID m_PlayerID;
     
